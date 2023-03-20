@@ -44,7 +44,11 @@ typedef struct {
             uint16_t InactivityDuration;   // Pour durée inactivité
 } S_Pec12_Descriptor;
 
+typedef struct {
 
+            uint8_t OK  : 1;              // événement action OK
+
+} S_S9_Descriptor;
 
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -91,6 +95,8 @@ bool Pec12IsOK    (void);
 bool Pec12IsESC    (void);
 //       Pec12NoActivity   true indique abscence d'activité sur PEC12
 bool Pec12NoActivity    (void);
+//       S9_OK             true indique une pression sur le switch S9
+bool S9_OK    (void);
 
 //  Fonctions pour quittance des indications
 //       Pec12ClearPlus    annule indication d'incrément
@@ -102,6 +108,8 @@ void Pec12ClearOK   (void);
 //       Pec12ClearESC     annule indication action ESC
 void Pec12ClearESC   (void);
 void Pec12ClearInactivity   (void);
+//       S9ClearOK    annule indication action ok
+void S9ClearOK (void);
 
 
 #endif

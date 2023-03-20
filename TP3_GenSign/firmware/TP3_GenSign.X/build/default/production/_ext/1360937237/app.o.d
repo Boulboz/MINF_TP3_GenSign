@@ -142,10 +142,10 @@ build/default/production/_ext/1360937237/app.o: ../src/app.c ../src/app.h \
  ../../../../../../../framework/driver/tmr/drv_tmr_compatibility.h \
  ../../../../../../../framework/system/ports/sys_ports.h \
  ../../../../../../../framework/system/ports/sys_ports_definitions.h \
- ../src/app.h ../src/DefMenuGen.h \
+ ../src/app.h ../src/DefMenuGen.h ../src/GesPec12.h ../src/Mc32Debounce.h \
+ ../src/MenuGen.h ../src/Generateur.h \
  ../../../../../../../bsp/pic32mx_skes/Mc32DriverLcd.h \
- ../src/Mc32gestSpiDac.h ../src/MenuGen.h ../src/GesPec12.h \
- ../src/Generateur.h
+ ../src/Mc32gestSpiDac.h
 
 ../src/app.h:
 
@@ -439,12 +439,14 @@ build/default/production/_ext/1360937237/app.o: ../src/app.c ../src/app.h \
 
 ../src/DefMenuGen.h:
 
-../../../../../../../bsp/pic32mx_skes/Mc32DriverLcd.h:
+../src/GesPec12.h:
 
-../src/Mc32gestSpiDac.h:
+../src/Mc32Debounce.h:
 
 ../src/MenuGen.h:
 
-../src/GesPec12.h:
-
 ../src/Generateur.h:
+
+../../../../../../../bsp/pic32mx_skes/Mc32DriverLcd.h:
+
+../src/Mc32gestSpiDac.h:

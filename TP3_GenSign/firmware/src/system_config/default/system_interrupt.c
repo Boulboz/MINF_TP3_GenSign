@@ -63,6 +63,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "app.h"
 #include "system_definitions.h"
 
+
+uint16_t init = 0;
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: System Interrupt Vector Functions
@@ -73,10 +76,29 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 void __ISR(_TIMER_1_VECTOR, ipl3AUTO) IntHandlerDrvTmrInstance0(void)
 {
+    BSP_LEDOn(BSP_LED_0);
+    if (init > 3000)
+    {   
+        
+        APP_UpdateState (APP_STATE_SERVICE_TASKS);
+    }
+    else
+    {
+        
+        APP_UpdateState(APP_STATE_WAIT);
+        init ++;
+    }
+    
+    ScanPec12(PEC12_A,PEC12_B,PEC12_PB);
+    
+    BSP_LEDOff(BSP_LED_0);
     PLIB_INT_SourceFlagClear(INT_ID_0,INT_SOURCE_TIMER_1);
 }
+
+
 void __ISR(_TIMER_3_VECTOR, ipl7AUTO) IntHandlerDrvTmrInstance1(void)
 {
+    GENSIG_Execute();
     PLIB_INT_SourceFlagClear(INT_ID_0,INT_SOURCE_TIMER_3);
 }
  /*******************************************************************************

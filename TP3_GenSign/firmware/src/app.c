@@ -56,9 +56,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "app.h"
 #include "Mc32DriverLcd.h"
 #include "Mc32gestSpiDac.h"
-#include "MenuGen.h"
-#include "GesPec12.h"
-#include "Generateur.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -82,8 +79,12 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 */
 
 APP_DATA appData;
+
+
 S_ParamGen LocalParamGen;
 
+uint8_t value = 0;
+uint8_t Temps = 0;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -103,7 +104,9 @@ S_ParamGen LocalParamGen;
 
 /* TODO:  Add any necessary local functions.
 */
-
+   
+    //int *ptr;        
+    //extern bool Flaginit = 0 ;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -140,12 +143,17 @@ void APP_Initialize ( void )
 
 void APP_Tasks ( void )
 {
+    //déclaration variable
+      
+      
     /* Check the application's current state. */
     switch ( appData.state )
     {
         /* Application's initial state. */
         case APP_STATE_INIT:
         {
+            
+            
             lcd_init();
             lcd_bl_on();
 
@@ -161,15 +169,27 @@ void APP_Tasks ( void )
             // Initialisation du generateur
             GENSIG_Initialize(&LocalParamGen);
             
-            printf_lcd("Canevas Tp3       ");
+            printf_lcd("TP3_LDD_GSM       ");
             // A adapter pour les 2 noms sur 2 lignes
             lcd_gotoxy(1,2);
-            printf_lcd("C. Huber 03.02.2016");
+            printf_lcd("28.02.2023");
 
             // Active les timers 
             DRV_TMR0_Start();
             DRV_TMR1_Start();
-            appData.state = APP_STATE_WAIT;
+            
+            //éteindre toutes les LEDs 
+            BSP_LEDOff(BSP_LED_0);
+            BSP_LEDOff(BSP_LED_1);
+            BSP_LEDOff(BSP_LED_2);
+            BSP_LEDOff(BSP_LED_3);
+            BSP_LEDOff(BSP_LED_4);
+            BSP_LEDOff(BSP_LED_5);
+            BSP_LEDOff(BSP_LED_6);
+            BSP_LEDOff(BSP_LED_7);
+            
+            GENSIG_UpdateSignal(&LocalParamGen);
+            
             break;
         }
         case APP_STATE_WAIT :
@@ -177,11 +197,15 @@ void APP_Tasks ( void )
         break;
 
        case APP_STATE_SERVICE_TASKS:
-            BSP_LEDToggle(BSP_LED_2);
-
-            // Execution du menu
+          //attente 10 cycle pour aller dans le menu
+           if( Temps >= 10)
+           {
             MENU_Execute(&LocalParamGen);
-            appData.state = APP_STATE_WAIT;
+            Temps = 0;
+           }
+            Temps ++;
+
+          appData.state = APP_STATE_WAIT;
          break;
         /* TODO: implement your application state machine.*/
 

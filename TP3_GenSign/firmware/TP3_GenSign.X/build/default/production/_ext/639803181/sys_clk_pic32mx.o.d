@@ -143,7 +143,8 @@ build/default/production/_ext/639803181/sys_clk_pic32mx.o: \
  ../../../../../../../framework/driver/tmr/drv_tmr_compatibility.h \
  ../../../../../../../framework/system/ports/sys_ports.h \
  ../../../../../../../framework/system/ports/sys_ports_definitions.h \
- ../src/app.h ../src/DefMenuGen.h
+ ../src/app.h ../src/DefMenuGen.h ../src/GesPec12.h ../src/Mc32Debounce.h \
+ ../src/MenuGen.h ../src/app.h ../src/Generateur.h
 
 ../src/system_config/default/system_config.h:
 
@@ -434,3 +435,13 @@ build/default/production/_ext/639803181/sys_clk_pic32mx.o: \
 ../src/app.h:
 
 ../src/DefMenuGen.h:
+
+../src/GesPec12.h:
+
+../src/Mc32Debounce.h:
+
+../src/MenuGen.h:
+
+../src/app.h:
+
+../src/Generateur.h:

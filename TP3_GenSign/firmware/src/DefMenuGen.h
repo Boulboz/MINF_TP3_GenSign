@@ -16,6 +16,10 @@
 
 typedef enum  { SignalSinus, SignalTriangle, SignalDentDeScie, SignalCarre } E_FormesSignal;
 
+
+typedef enum  { Select_Forme, Select_Freq, Select_Ampli, Select_Offset, Set_Forme, Set_Freq, Set_Ampli, Set_Offset } E_Switch;
+
+
 // Structure des paramètres du générateur
 typedef struct {
       E_FormesSignal Forme;
@@ -24,5 +28,15 @@ typedef struct {
       int16_t Offset;
       uint32_t Magic;
 } S_ParamGen;
+
+typedef struct {
+      char C_Forme;
+      char C_Freq;
+      char C_Ampli;
+      char C_Offset;
+} S_Curseur;
+
+
+extern S_ParamGen Test; 
 
 #endif

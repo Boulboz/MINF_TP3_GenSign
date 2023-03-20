@@ -27,6 +27,8 @@
 
 #include "GesPec12.h"
 #include "Mc32Debounce.h"
+#include <stdint.h>
+#include "bsp.h"
 
 // Descripteur des sinaux
 S_SwitchDescriptor DescrA;
@@ -34,8 +36,8 @@ S_SwitchDescriptor DescrB;
 S_SwitchDescriptor DescrPB;
 
 // Structure pour les traitement du Pec12
-S_Pec12_Descriptor Pec12;
-
+static S_Pec12_Descriptor Pec12;
+S_S9_Descriptor S9;
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 // Principe utilisation des fonctions
@@ -72,17 +74,75 @@ void ScanPec12 (bool ValA, bool ValB, bool ValPB)
    // Traitement antirebond sur A, B et PB
    DoDebounce (&DescrA, ValA);
    DoDebounce (&DescrB, ValB);
-   DoDebounce (&DescrPB, ValPB);
-   
+   DoDebounce (&DescrPB, ValPB); 
    // Détection incrément / décrément
-  
    
-    
+   //si le signal B est préssé
+   if (DebounceIsPressed(&DescrB)   )   
+   {
+       //met a 0 la variable
+       Pec12.InactivityDuration = 0;
+       //determination du sens par apport à A
+       DebounceClearPressed(&DescrB);
+       if(DebounceGetInput(&DescrA))
+       {
+           Pec12.Inc = 1;   
+       }
+       else
+       {
+           Pec12.Dec = 1 ;
+       }
+   }
    // Traitement du PushButton
+   if (DebounceIsPressed(&DescrPB))
+   {
+       
+       Pec12.InactivityDuration = 0;
+       Pec12.PressDuration += 1; 
+   }
+   else 
+   {
+       Pec12.PressDuration = 0;
+   }
+   //gestion de l'encodeur préssé
+   if(DebounceIsReleased (&DescrPB))
+   {
+       DebounceClearPressed(&DescrPB);
+       DebounceClearReleased(&DescrPB);
+       //savoir si s'est un appui bref ou long
+       if (Pec12.PressDuration > 500)
+       {
+           Pec12.ESC = 1; 
+       }
+       else 
+       {
+           Pec12.OK = 1;
+       }
+   }
+    //gestion boutton S9
+    if(S_OK == 0)
+    {
+        
+        S9.OK = 1;
+    }
+    else
+    {
+        //Affacer la valleur de S9
+        S9.OK = 0;
+    }
+   
+   
    
    
    // Gestion inactivité
-
+   if(Pec12.InactivityDuration > 5000)
+   {
+       Pec12.NoActivity = 1;
+   }
+   else 
+   {
+     Pec12.InactivityDuration += 1;  
+   }
 
    
  } // ScanPec12
@@ -158,7 +218,12 @@ void Pec12ClearESC   (void) {
 
 void Pec12ClearInactivity   (void) {
   Pec12.NoActivity = 0;
-  Pec12.InactivityDuration = 0;
+}
+bool S9_OK (void){
+    return(S9.OK);
+}
+void S9ClearOK (void){
+    S9.OK = 0;
 }
 
 

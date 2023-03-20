@@ -61,7 +61,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "system_definitions.h"
 
 #include "DefMenuGen.h"     // paramètres du génerateur
-
+#include "GesPec12.h"
+#include "Mc32Debounce.h"
+#include "MenuGen.h"
+#include "Generateur.h"
 // *****************************************************************************
 // *****************************************************************************
 // Section: Type Definitions
@@ -87,6 +90,7 @@ typedef enum
         APP_STATE_SERVICE_TASKS=2
 	
 } APP_STATES;
+
 
 
 // *****************************************************************************
@@ -121,7 +125,6 @@ typedef struct
 /* These routines are called by drivers when certain events occur.
 */
 
-	
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Initialization and State Machine Functions

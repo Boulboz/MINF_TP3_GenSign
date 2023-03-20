@@ -10,13 +10,17 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-#include "DefMenuGen.h"
+#include "app.h"
+
 
 
 void MENU_Initialize(S_ParamGen *pParam);
 
 
 void MENU_Execute(S_ParamGen *pParam);
+
+
+
 
 #endif
 
